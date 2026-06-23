@@ -1,6 +1,4 @@
-function AppInput(props) {
-  const { type, value, className, setValue } = props;
-
+function AppInput({ type, value, className, setValue }) {
   return (
     <input
       className={className}
