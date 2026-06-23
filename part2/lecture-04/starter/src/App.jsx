@@ -1,45 +1,47 @@
-import { useState } from "react";
-import "./App.css";
+import { useState } from 'react';
+import './App.css';
+// import UsernameInput from './UsernameInput';
+// import UserPasswordClass from './UserPasswordClass';
+import AppInput from './AppInput';
 
 function App() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-  const usernameClass = username.length <= 5 ? "input-error" : "input";
-  const passwordClass = password.length <= 5 ? "input-error" : "input";
+  const usernameClass = username.length <= 5 ? 'input-error' : 'input';
+  const passwordClass = password.length <= 5 ? 'input-error' : 'input';
 
   function handleSubmit(event) {
     event.preventDefault();
 
-    if (usernameClass === "input-error" || passwordClass === "input-error") {
+    if (usernameClass === 'input-error' || passwordClass === 'input-error') {
       return;
     }
 
-    console.log("username: ", username);
-    console.log("password: ", password);
+    console.log('username: ', username);
+    console.log('password: ', password);
 
-    setUsername("");
-    setPassword("");
+    setUsername('');
+    setPassword('');
   }
 
   return (
     <main>
       <h2>Login Form</h2>
-      <form onSubmit={handleSubmit} style={{ textAlign: "center" }}>
-        <input
-          className={usernameClass}
+      <form onSubmit={handleSubmit} style={{ textAlign: 'center' }}>
+        <AppInput
           type="text"
           value={username}
-          onChange={(event) => setUsername(event.target.value)}
+          className={usernameClass}
+          setValue={setUsername}
         />
         <br />
-        <input
-          className={passwordClass}
+        <AppInput
           type="password"
           value={password}
-          onChange={(event) => setPassword(event.target.value)}
+          className={passwordClass}
+          setValue={setPassword}
         />
-
         <br />
         <button type="submit" className="btn">
           Login
