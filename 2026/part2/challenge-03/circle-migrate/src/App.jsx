@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import './App.css';
 import CircleController from './CircleController';
+import TogglePurple from './TogglePurple';
+import TextColor from './TextColor';
 
 function App() {
   const [isPurple, setIsPurple] = useState(false);
@@ -20,28 +22,15 @@ function App() {
 
   return (
     <main>
-      <label>
-        Purple
-        <input
-          type="checkbox"
-          onChange={() => setIsPurple(!isPurple)}
-          checked={isPurple}
-        />
-      </label>
+      <TogglePurple
+        type="checkbox"
+        isPurple={isPurple}
+        setIsPurple={setIsPurple}
+      />
 
-      <label>
-        text color
-        <select
-          value={textColor}
-          onChange={(event) => setTextColor(event.target.value)}
-        >
-          <option value="" selected>
-            White
-          </option>
-          <option value="text-black">Black</option>
-          <option value="text-orange">Orange</option>
-        </select>
-      </label>
+      <TextColor textColor={textColor} setTextColor={setTextColor}>
+        Text Color
+      </TextColor>
 
       <CircleController value={size} setValue={setSize}>
         Circle Size
