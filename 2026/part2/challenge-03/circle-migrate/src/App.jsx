@@ -3,6 +3,7 @@ import './App.css';
 import CircleController from './CircleController';
 import TogglePurple from './TogglePurple';
 import TextColor from './TextColor';
+import Circle from './Circle';
 
 function App() {
   const [isPurple, setIsPurple] = useState(false);
@@ -39,9 +40,10 @@ function App() {
       <CircleController value={rotate} setValue={setRotate}>
         Circle Rotate
       </CircleController>
-      <div className={`circle ${circleClasses}`} style={circleStyles}>
-        Hi!
-      </div>
+
+      <Circle circleClasses={circleClasses} circleStyles={circleStyles}>
+        Circle
+      </Circle>
     </main>
   );
 }
