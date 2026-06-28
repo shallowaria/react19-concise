@@ -5,7 +5,12 @@ function App() {
   const adviceURL = 'https://api.adviceslip.com/advice';
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-  const { data, isLoading, mutate: getAdvice } = useSWR(adviceURL, fetcher);
+  const {
+    data,
+    isLoading,
+    mutate: getAdvice,
+    isValidating,
+  } = useSWR(adviceURL, fetcher);
 
   // const [advice, setAdvice] = useState('');
   // const [isLoading, setIsLoading] = useState(false);
@@ -27,8 +32,8 @@ function App() {
   return (
     <main>
       <h1>Advice App</h1>
-      <p>{isLoading ? 'Loading...' : data?.slip?.advice}</p>
-      <button disabled={isLoading} onClick={getAdvice}>
+      <p>{isValidating ? 'Loading...' : data?.slip?.advice}</p>
+      <button disabled={isValidating} onClick={() => getAdvice()}>
         Get Advice
       </button>
     </main>
