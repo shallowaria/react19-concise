@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-export default function () {
+export default function useGeolocation() {
   const [position, setPosition] = useState(null);
 
   function getPosition() {
@@ -21,7 +20,7 @@ export default function () {
       (error) => {
         alert(error.message);
         console.error(error);
-      }
+      },
     );
   }
 
