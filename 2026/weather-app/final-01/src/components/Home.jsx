@@ -1,30 +1,22 @@
 import { Button } from '@mui/material';
 import Day from './Day';
 import styles from './Home.module.css';
-import { getCurrentWeather as getCurrentWeatherApi } from '../services/apiWeather';
 import { useState } from 'react';
 import Welcome from './Welcome';
 import useSWRMutation from 'swr/mutation';
-import fetcher from '../utils/fetcher';
-
-const API_URL = import.meta.env.VITE_API_URL;
-const API_KEY = import.meta.env.VITE_API_KEY;
+import useCurrentWeather from '../hooks/useCurrentWeather';
 
 function Home({ getPosition, status }) {
-  const { trigger, data, isMutating, error } = useSWRMutation(API_URL, fetcher);
+  // const { trigger, data, isMutating, error } = useSWRMutation(API_URL, fetcher);
 
-  async function getCurrentWeather() {
-    const position = await getPosition();
-    const { latitude: lat, longitude: lon } = position;
+  // async function getCurrentWeather() {
+  //   const position = await getPosition();
+  //   const { latitude: lat, longitude: lon } = position;
 
-    await trigger({ path: 'weather', lat, lon, apiKey: API_KEY });
+  //   await trigger({ path: 'weather', lat, lon, apiKey: API_KEY });
 
-    // const currentWeatherData = await getCurrentWeatherApi(
-    //   position.latitude,
-    //   position.longitude,
-    // );
-    // setData(currentWeatherData);
-  }
+  const { getCurrentWeather, data, isMutating, error } =
+    useCurrentWeather(getPosition);
 
   return (
     <section className={styles.section}>
