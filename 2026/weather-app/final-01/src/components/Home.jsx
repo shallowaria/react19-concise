@@ -4,19 +4,26 @@ import styles from './Home.module.css';
 import { getCurrentWeather as getCurrentWeatherApi } from '../services/apiWeather';
 import { useState } from 'react';
 import Welcome from './Welcome';
+import useSWRMutation from 'swr/mutation';
+import fetcher from '../utils/fetcher';
+
+const API_URL = import.meta.env.VITE_API_URL;
+const API_KEY = import.meta.env.VITE_API_KEY;
 
 function Home({ getPosition, status }) {
-  const [data, setData] = useState(null);
+  const { trigger, data, isMutating, error } = useSWRMutation(API_URL, fetcher);
 
   async function getCurrentWeather() {
     const position = await getPosition();
+    const { latitude: lat, longitude: lon } = position;
 
-    const currentWeatherData = await getCurrentWeatherApi(
-      position.latitude,
-      position.longitude,
-    );
+    await trigger({ path: 'weather', lat, lon, apiKey: API_KEY });
 
-    setData(currentWeatherData);
+    // const currentWeatherData = await getCurrentWeatherApi(
+    //   position.latitude,
+    //   position.longitude,
+    // );
+    // setData(currentWeatherData);
   }
 
   return (
@@ -28,7 +35,12 @@ function Home({ getPosition, status }) {
         />
       )}
       {!data && <Welcome>Welcome to Kayb Weather App</Welcome>}
-      <Button variant="contained" size="large" onClick={getCurrentWeather}>
+      <Button
+        disabled={isMutating}
+        variant="contained"
+        size="large"
+        onClick={getCurrentWeather}
+      >
         {status}
       </Button>
     </section>
