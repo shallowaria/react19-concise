@@ -1,11 +1,10 @@
-const API_URL =
-  'https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}';
+const API_URL = import.meta.env.VITE_API_URL;
 
-const API_KEY = 'd367d0af6a5ea85abce2459c7778fe62';
+const API_KEY = import.meta.env.VITE_API_KEY;
 
 export async function getCurrentWeather(latitude, longitude) {
   const response = await fetch(
-    `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`,
+    `${API_URL}/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`,
   );
   const data = await response.json();
   return data;
