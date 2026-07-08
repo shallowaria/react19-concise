@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 export default function () {
   const [status, setStatus] = useState('Get Current Weather');
+  const [position, setPosition] = useState(null);
 
   async function getPosition() {
     return new Promise((resolve, reject) => {
@@ -20,6 +21,7 @@ export default function () {
           const { latitude, longitude } = position.coords;
 
           resolve({ latitude, longitude });
+          setPosition({ latitude, longitude });
           setStatus('Get Forecast Weather');
         },
         (error) => {
@@ -27,10 +29,14 @@ export default function () {
           alert(error.message);
           console.error(error);
           setStatus(error.message);
-        }
+        },
+        {
+          maximumAge: 1000 * 60 * 5,
+          timeout: 10000,
+        },
       );
     });
   }
 
-  return { getPosition, status };
+  return { getPosition, status, position };
 }
