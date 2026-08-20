@@ -13,14 +13,6 @@ import { forecastWeatherFetcher } from '../utils/fetcher';
 function Forecast({ position, setIsHome }) {
   const weatherForecasts = [
     {
-      id: 1,
-      weatherIcon: 'https://openweathermap.org/img/wn/10n@2x.png',
-      min: '20',
-      max: '30',
-      weather: 'Rain',
-      date: '2024-04-03',
-    },
-    {
       id: 2,
       weatherIcon: 'https://openweathermap.org/img/wn/10n@2x.png',
       min: '20',
