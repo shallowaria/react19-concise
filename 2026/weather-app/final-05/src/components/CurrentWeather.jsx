@@ -12,6 +12,7 @@ function CurrentWeather({ data, status, setIsHome }) {
       />
       <Button variant="contained" size="large" onClick={() => setIsHome(false)}>
         {status}
+        114514
       </Button>
     </section>
   );
