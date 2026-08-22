@@ -2,18 +2,14 @@ import Container from './components/Container';
 import Forecast from './components/Forecast';
 import Home from './components/Home';
 import useGeolocation from './hooks/useGeolocation.js';
-import { useState } from 'react';
 
 function App() {
-  const { getPosition, status, position } = useGeolocation();
-  const [isHome, setIsHome] = useState(true);
+  const { getPosition, status } = useGeolocation();
 
   return (
     <Container>
-      {isHome && (
-        <Home getPosition={getPosition} status={status} setIsHome={setIsHome} />
-      )}
-      {!isHome && <Forecast position={position} setIsHome={setIsHome} />}
+      <Home getPosition={getPosition} status={status} />
+      {/* <Forecast /> */}
     </Container>
   );
 }

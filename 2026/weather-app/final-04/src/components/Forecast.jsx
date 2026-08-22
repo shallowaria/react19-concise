@@ -1,12 +1,10 @@
 import { List, ListItem, ListItemAvatar, ListItemText } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
-import Fab from '@mui/material/Fab';
-import HomeIcon from '@mui/icons-material/Home';
 
 // Weather forecast
 // https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
 
-function Forecast({ position, setIsHome }) {
+function Forecast() {
   const weatherForecasts = [
     {
       id: 1,
@@ -42,44 +40,27 @@ function Forecast({ position, setIsHome }) {
     },
   ];
 
-  const fabStyle = {
-    position: 'absolute',
-    bottom: 16,
-    right: 16,
-  };
-
   return (
-    <>
-      <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-        {weatherForecasts.map((weatherForecast) => (
-          <ListItem key={weatherForecast.id}>
-            <ListItemAvatar>
-              <Avatar>
-                <img width={48} src={weatherForecast.weatherIcon} alt="" />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText
-              primary={weatherForecast.weather}
-              secondary={weatherForecast.date}
-            />
-            <span>
-              {Math.floor(weatherForecast.min)}&deg;/
-              {Math.ceil(weatherForecast.max)}
-              &deg;
-            </span>
-          </ListItem>
-        ))}
-      </List>
-
-      <Fab
-        sx={fabStyle}
-        color="primary"
-        aria-label="add"
-        onClick={() => setIsHome(true)}
-      >
-        <HomeIcon />
-      </Fab>
-    </>
+    <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+      {weatherForecasts.map((weatherForecast) => (
+        <ListItem key={weatherForecast.id}>
+          <ListItemAvatar>
+            <Avatar>
+              <img width={48} src={weatherForecast.weatherIcon} alt="" />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            primary={weatherForecast.weather}
+            secondary={weatherForecast.date}
+          />
+          <span>
+            {Math.floor(weatherForecast.min)}&deg;/
+            {Math.ceil(weatherForecast.max)}
+            &deg;
+          </span>
+        </ListItem>
+      ))}
+    </List>
   );
 }
 export default Forecast;

@@ -1,9 +1,7 @@
-import { useState, Activity } from 'react';
-
+import { useState } from 'react';
 import Container from './components/Container';
 import Forecast from './components/Forecast';
 import Home from './components/Home';
-
 import useGeolocation from './hooks/useGeolocation.js';
 
 function App() {
@@ -13,12 +11,10 @@ function App() {
 
   return (
     <Container>
-      <Activity mode={isHome ? 'visible' : 'hidden'}>
+      {isHome && (
         <Home getPosition={getPosition} status={status} setIsHome={setIsHome} />
-      </Activity>
-      <Activity mode={!isHome ? 'visible' : 'hidden'}>
-        <Forecast position={position} setIsHome={setIsHome} />
-      </Activity>
+      )}
+      {!isHome && <Forecast position={position} setIsHome={setIsHome} />}
     </Container>
   );
 }
