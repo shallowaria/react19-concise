@@ -4,11 +4,11 @@ import Home from './components/Home';
 import useGeolocation from './hooks/useGeolocation.js';
 
 function App() {
-  const position = useGeolocation();
+  const { getPosition, state } = useGeolocation();
 
   return (
     <Container>
-      <Home />
+      <Home getPosition={getPosition} state={state}/>
       {/* <Forecast /> */}
     </Container>
   );
