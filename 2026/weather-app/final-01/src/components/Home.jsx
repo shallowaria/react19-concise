@@ -1,25 +1,12 @@
 import { Button } from '@mui/material';
 import Day from './Day';
 import styles from './Home.module.css';
-import { getCurrentWeather as getCurrentWeatherApi } from '../services/apiWeather';
-import { useState } from 'react';
 import Welcome from './Welcome';
+import useCurrentWeather from '../hooks/useCurrentWeather';
 
 function Home({ getPosition, state }) {
-  const [data, setData] = useState(null);
-
-  async function getCurrentWeather() {
-    const position = await getPosition();
-
-    console.log(position);
-
-    const currentWeatherData = await getCurrentWeatherApi(
-      position.latitude,
-      position.longitude,
-    );
-
-    setData(currentWeatherData);
-  }
+  const { getCurrentWeather, data, isMutating, error } =
+    useCurrentWeather(getPosition);
 
   return (
     <section className={styles.section}>
@@ -31,7 +18,12 @@ function Home({ getPosition, state }) {
       )}
 
       {!data && <Welcome>Welcome to Kayb Weather App</Welcome>}
-      <Button variant="contained" size="large" onClick={getCurrentWeather}>
+      <Button
+        disabled={isMutating}
+        variant="contained"
+        size="large"
+        onClick={getCurrentWeather}
+      >
         {state}
       </Button>
     </section>
