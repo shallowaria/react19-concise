@@ -1,23 +1,21 @@
 import { Button } from '@mui/material';
-import Day from './Day';
-import styles from './Home.module.css';
 import Welcome from './Welcome';
 import useCurrentWeather from '../hooks/useCurrentWeather';
+import CurrentWeather from './CurrentWeather';
 
-function Home({ getPosition, state }) {
+function Home({ getPosition, state, setIsHome }) {
   const { getCurrentWeather, data, isMutating, error } =
     useCurrentWeather(getPosition);
 
-  return (
-    <section className={styles.section}>
-      {data && (
-        <Day
-          temperature={{ max: data.main.temp_max, min: data.main.temp_min }}
-          iconCode={data.weather[0].icon}
-        />
-      )}
+  if (data) {
+    return <CurrentWeather data={data} state={state} setIsHome={setIsHome} />;
+  }
 
-      {!data && <Welcome>Welcome to Kayb Weather App</Welcome>}
+  return (
+    <>
+      <Welcome>
+        {isMutating ? 'Loading...' : 'Welcome to Kayb Weather App'}
+      </Welcome>
       <Button
         disabled={isMutating}
         variant="contained"
@@ -26,7 +24,7 @@ function Home({ getPosition, state }) {
       >
         {state}
       </Button>
-    </section>
+    </>
   );
 }
 export default Home;
