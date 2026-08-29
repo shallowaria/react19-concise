@@ -7,6 +7,8 @@ import {
 } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import Avatar from '@mui/material/Avatar';
+import useSWR from 'swr';
+import { forecastWeatherFetcher } from '../utils/fetcher';
 
 // Weather forecast
 // https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
@@ -52,6 +54,22 @@ function Forecast({ position, setIsHome }) {
     bottom: 16,
     right: 16,
   };
+
+  const API_URL = import.meta.env.VITE_API_URL;
+  const API_KEY = import.meta.env.VITE_API_KEY;
+
+  const lat = position?.latitude;
+  const lon = position?.longitude;
+
+  const { data, error } = useSWR(
+    `${API_URL}/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`,
+    forecastWeatherFetcher,
+    {
+      onSuccess: (data) => {
+        console.log(data);
+      },
+    },
+  );
 
   return (
     <>

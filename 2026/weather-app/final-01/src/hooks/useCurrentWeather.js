@@ -1,11 +1,14 @@
 import useSWRMutation from 'swr/mutation';
-import fetcher from '../utils/fetcher';
+import { currentWeatherFetcher } from '../utils/fetcher';
 
 const API_URL = import.meta.env.VITE_API_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 export default function useCurrentWeather(getPosition) {
-  const { trigger, data, isMutating, error } = useSWRMutation(API_URL, fetcher);
+  const { trigger, data, isMutating, error } = useSWRMutation(
+    API_URL,
+    currentWeatherFetcher,
+  );
 
   async function getCurrentWeather() {
     const position = await getPosition();
