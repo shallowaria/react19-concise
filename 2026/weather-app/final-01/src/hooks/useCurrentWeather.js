@@ -4,7 +4,7 @@ import { currentWeatherFetcher } from '../utils/fetcher';
 const API_URL = import.meta.env.VITE_API_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
 
-export default function useCurrentWeather(getPosition) {
+export default function (getPosition) {
   const { trigger, data, isMutating, error } = useSWRMutation(
     API_URL,
     currentWeatherFetcher,

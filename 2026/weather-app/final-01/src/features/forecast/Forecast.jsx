@@ -1,9 +1,10 @@
 import { List } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 
-import useForecastWeather from '../hooks/useForecastWeather.js';
 import ForecastListItem from './ForecastListItem.jsx';
-import FloatingButton from './FloatingButton.jsx';
+import FloatingButton from '../../ui/FloatingButton.jsx';
+
+import useForecastWeather from '../../hooks/useForecastWeather.js';
 
 // Weather forecast
 // https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
