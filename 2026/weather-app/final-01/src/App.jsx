@@ -1,8 +1,8 @@
 import { useState, Activity } from 'react';
 
-import Container from './ui/Container';
-import Forecast from './features/forecast/Forecast';
-import Home from './features/home/Home';
+import Container from '@/ui/Container';
+import Forecast from '@/features/forecast/Forecast';
+import Home from '@/features/home/Home';
 
 import useGeolocation from './hooks/useGeolocation.js';
 

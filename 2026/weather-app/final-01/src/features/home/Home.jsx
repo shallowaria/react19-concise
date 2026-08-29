@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 
-import Welcome from '../../ui/Welcome';
-import useCurrentWeather from '../../hooks/useCurrentWeather';
+import Welcome from '@/ui/Welcome';
+import useCurrentWeather from '@/hooks/useCurrentWeather';
 import CurrentWeather from './CurrentWeather';
 
 function Home({ getPosition, state, setIsHome }) {
