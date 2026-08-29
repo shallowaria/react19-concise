@@ -14,41 +14,6 @@ import { forecastWeatherFetcher } from '../utils/fetcher';
 // https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
 
 function Forecast({ position, setIsHome }) {
-  const weatherForecasts = [
-    {
-      id: 1,
-      weatherIcon: 'https://openweathermap.org/img/wn/10n@2x.png',
-      min: '20',
-      max: '30',
-      weather: 'Rain',
-      date: '2024-04-03',
-    },
-    {
-      id: 2,
-      weatherIcon: 'https://openweathermap.org/img/wn/10n@2x.png',
-      min: '20',
-      max: '30',
-      weather: 'Rain',
-      date: '2024-04-03',
-    },
-    {
-      id: 3,
-      weatherIcon: 'https://openweathermap.org/img/wn/10n@2x.png',
-      min: '20',
-      max: '30',
-      weather: 'Rain',
-      date: '2024-04-03',
-    },
-    {
-      id: 4,
-      weatherIcon: 'https://openweathermap.org/img/wn/10n@2x.png',
-      min: '20',
-      max: '30',
-      weather: 'Rain',
-      date: '2024-04-03',
-    },
-  ];
-
   const fabStyle = {
     position: 'absolute',
     bottom: 16,
@@ -64,18 +29,33 @@ function Forecast({ position, setIsHome }) {
   const { data, error } = useSWR(
     `${API_URL}/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`,
     forecastWeatherFetcher,
-    {
-      onSuccess: (data) => {
-        console.log(data);
-      },
-    },
   );
+
+  const filteredForecastDatalist = data?.list
+    .map((forecastData) => {
+      return {
+        dt: forecastData.dt,
+        weatherIcon: `https://openweathermap.org/img/wn/${forecastData.weather[0].icon}@2x.png`,
+        min: forecastData.main.temp_min,
+        max: forecastData.main.temp_max,
+        weather: forecastData.weather[0].main,
+        date: forecastData.dt_txt,
+      };
+    })
+    .filter((forecastData) => forecastData.date.includes('12:00:00'))
+    .filter((forecastData) => {
+      const todatDate = new Date().getDate();
+      const forecastDate = new Date(forecastData.date).getDate();
+      return forecastDate !== todatDate;
+    });
+
+  console.log(filteredForecastDatalist);
 
   return (
     <>
       <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-        {weatherForecasts.map((weatherForecast) => (
-          <ListItem key={weatherForecast.id}>
+        {filteredForecastDatalist?.map((weatherForecast) => (
+          <ListItem key={weatherForecast.dt}>
             <ListItemAvatar>
               <Avatar>
                 <img width={48} src={weatherForecast.weatherIcon} alt="" />
@@ -83,7 +63,7 @@ function Forecast({ position, setIsHome }) {
             </ListItemAvatar>
             <ListItemText
               primary={weatherForecast.weather}
-              secondary={weatherForecast.date}
+              secondary={weatherForecast.date.split(' ')[0]}
             />
             <span>
               {Math.floor(weatherForecast.min)}&deg;/
